@@ -25,19 +25,7 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     }
   };
 
-  const handleShowEmailForm = (restaurantInfo: RestaurantInfo, results: CalculationResults) => {
-    setEmailFormData({ restaurantInfo, calculationResults: results });
-    setShowEmailForm(true);
-  };
 
-  const handleCalculationComplete = (results: CalculationResults) => {
-    // For now, we'll create a default restaurant info if none exists
-    const defaultRestaurantInfo: RestaurantInfo = {
-      name: 'Your Restaurant',
-      city: 'Your City'
-    };
-    handleShowEmailForm(defaultRestaurantInfo, results);
-  };
 
   const handleProceedToEmail = () => {
     // This will be called when user wants to proceed to email form
@@ -101,7 +89,6 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
         {/* Section 6: Calculator Integration */}
         <div id="calculator-section">
           <CalculatorIntegrationSection
-            onCalculationComplete={handleCalculationComplete}
             onProceedToEmail={handleProceedToEmail}
           />
         </div>

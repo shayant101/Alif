@@ -6,26 +6,19 @@ import type { RestaurantInfo, CalculationResults } from '../../types';
 
 interface CalculatorIntegrationSectionProps {
   restaurantInfo?: RestaurantInfo;
-  onCalculationComplete: (results: CalculationResults) => void;
   onProceedToEmail: () => void;
 }
 
 export const CalculatorIntegrationSection: React.FC<CalculatorIntegrationSectionProps> = ({
   restaurantInfo,
-  onCalculationComplete,
   onProceedToEmail
 }) => {
   const [calculationResults, setCalculationResults] = useState<CalculationResults | null>(null);
   const [showChart, setShowChart] = useState(false);
 
-  const handleCalculationComplete = (results: CalculationResults) => {
-    setCalculationResults(results);
-    onCalculationComplete(results);
-    setShowChart(true);
-  };
-
   const handleShowEmailForm = (results: CalculationResults) => {
     setCalculationResults(results);
+    setShowChart(true);
     onProceedToEmail();
   };
 

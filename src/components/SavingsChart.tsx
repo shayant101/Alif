@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   LineChart,
   Line,
@@ -9,9 +9,8 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
-import type { MonthlyProjection, RestaurantInfo, CalculationResults } from '../types';
+import type { MonthlyProjection } from '../types';
 import { formatCurrency } from '../utils/calculations';
-import { EmailCaptureForm } from './EmailCaptureForm';
 
 interface SavingsChartProps {
   projections: MonthlyProjection[];
