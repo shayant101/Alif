@@ -14,6 +14,7 @@ import { formatCurrency } from '../utils/calculations';
 
 interface SavingsChartProps {
   projections: MonthlyProjection[];
+  timeframe?: 'monthly' | 'annual';
 }
 
 interface CustomTooltipProps {
@@ -43,7 +44,8 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label })
 };
 
 export const SavingsChart: React.FC<SavingsChartProps> = ({
-  projections
+  projections,
+  timeframe = 'monthly'
 }) => {
   // Transform data for the chart with cumulative values
   const chartData = projections.map((projection, index) => {
@@ -64,7 +66,9 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
     <div className="savings-chart-redesigned">
       <div className="chart-header">
         <h3>12-Month Cumulative Savings</h3>
-        <p className="chart-subtitle">See your growing savings impact over time</p>
+        <p className="chart-subtitle">
+          See your growing savings impact over time ({timeframe === 'monthly' ? 'monthly' : 'annual'} view)
+        </p>
       </div>
       
       <div className="chart-container-light">
@@ -95,7 +99,10 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
               tickLine={false}
               axisLine={false}
               dx={-10}
-              tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+              tickFormatter={(value) => {
+                const suffix = timeframe === 'monthly' ? 'k/mo' : 'k/yr';
+                return `$${(value / 1000).toFixed(0)}${suffix}`;
+              }}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend />

@@ -90,11 +90,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
         
         <div className="hero-trust-indicators">
           <p className="trust-text">Trusted by restaurants nationwide</p>
-          <div className="trust-logos">
-            <div className="logo-placeholder">Charminar Restaurant</div>
-            <div className="logo-placeholder">Omega Burgers</div>
-            <div className="logo-placeholder">Cream and Sugar</div>
-            <div className="logo-placeholder">Nizarios Pizza and Grill</div>
+          <div className="trust-logos-carousel">
+            <div className="trust-logos-track">
+              <div className="logo-placeholder">Deccan Morsels</div>
+              <div className="logo-placeholder">Podi Dosa</div>
+              <div className="logo-placeholder">Charminar</div>
+              <div className="logo-placeholder">Julia's Pizza</div>
+              <div className="logo-placeholder">Husky Boy Burgers</div>
+              <div className="logo-placeholder">Charminar</div>
+              <div className="logo-placeholder">Mediterranean Grill</div>
+              <div className="logo-placeholder">Masala Ferry</div>
+              <div className="logo-placeholder">Dosa Studio</div>
+              <div className="logo-placeholder">Mongolian Hot Hut</div>
+              <div className="logo-placeholder">Phonomenal Asian Fusion</div>
+              <div className="logo-placeholder">Pho Ha plus Vietnamese Cuisine</div>
+              <div className="logo-placeholder">Nizario's Pizza & Grill</div>
+              <div className="logo-placeholder">Urban Punjab</div>
+              {/* Duplicate set for seamless loop */}
+              <div className="logo-placeholder">Deccan Morsels</div>
+              <div className="logo-placeholder">Podi Dosa</div>
+              <div className="logo-placeholder">Charminar</div>
+              <div className="logo-placeholder">Julia's Pizza</div>
+              <div className="logo-placeholder">Husky Boy Burgers</div>
+              <div className="logo-placeholder">Charminar</div>
+              <div className="logo-placeholder">Mediterranean Grill</div>
+              <div className="logo-placeholder">Masala Ferry</div>
+              <div className="logo-placeholder">Dosa Studio</div>
+              <div className="logo-placeholder">Mongolian Hot Hut</div>
+              <div className="logo-placeholder">Phonomenal Asian Fusion</div>
+              <div className="logo-placeholder">Pho Ha plus Vietnamese Cuisine</div>
+              <div className="logo-placeholder">Nizario's Pizza & Grill</div>
+              <div className="logo-placeholder">Urban Punjab</div>
+            </div>
           </div>
         </div>
       </div>

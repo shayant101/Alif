@@ -377,6 +377,42 @@
   letter-spacing: 0.5px;
 }
 
+.trust-logos-carousel {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  mask: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.trust-logos-track {
+  display: flex;
+  gap: 1.5rem;
+  animation: scroll-logos 30s linear infinite;
+  width: fit-content;
+}
+
+@keyframes scroll-logos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .trust-logos {
   display: flex;
   justify-content: center;
@@ -394,6 +430,14 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  flex-shrink: 0;
 }
 
 .logo-placeholder:hover {

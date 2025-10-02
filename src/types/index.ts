@@ -42,17 +42,17 @@ export interface AppState {
   leadData: LeadData | null;
 }
 
-export const DEFAULT_INPUTS: CalculatorInputs = {
-  totalGPV: null,
-  commissionPercent: null,
-  deliveryMix: null,
-  migrationPercent: null,
-  timeframe: 'annual'
-};
-
 export const SUGGESTED_VALUES = {
   totalGPV: 1200000, // $1.2M annual
   commissionPercent: 30,
   deliveryMix: 85,
-  migrationPercent: 100
+  migrationPercent: 40
+};
+
+export const DEFAULT_INPUTS: CalculatorInputs = {
+  totalGPV: null,
+  commissionPercent: SUGGESTED_VALUES.commissionPercent,
+  deliveryMix: SUGGESTED_VALUES.deliveryMix,
+  migrationPercent: SUGGESTED_VALUES.migrationPercent,
+  timeframe: 'monthly'
 };

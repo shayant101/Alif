@@ -15,7 +15,20 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
   restaurantInfo,
   onShowEmailForm
 }) => {
-  const [inputs, setInputs] = useState<CalculatorInputs>(DEFAULT_INPUTS);
+  // Load timeframe preference from localStorage, default to monthly
+  const getInitialTimeframe = (): 'monthly' | 'annual' => {
+    try {
+      const saved = localStorage.getItem('innowi-timeframe-preference');
+      return saved === 'annual' ? 'annual' : 'monthly';
+    } catch {
+      return 'monthly';
+    }
+  };
+
+  const [inputs, setInputs] = useState<CalculatorInputs>({
+    ...DEFAULT_INPUTS,
+    timeframe: getInitialTimeframe()
+  });
   const [hasViewedResults, setHasViewedResults] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
@@ -77,6 +90,15 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
       [field]: value
     }));
     
+    // Save timeframe preference to localStorage
+    if (field === 'timeframe' && typeof value === 'string') {
+      try {
+        localStorage.setItem('innowi-timeframe-preference', value);
+      } catch {
+        // Ignore localStorage errors
+      }
+    }
+    
     // Clear error when user starts typing
     if (inputErrors[field]) {
       setInputErrors(prev => ({
@@ -133,7 +155,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
   const tooltips = {
     totalGPV: "Your restaurant's total payment volume from all sources (dine-in, takeout, delivery)",
     commissionPercent: "The percentage fee charged by third-party delivery platforms like DoorDash, Uber Eats",
-    deliveryMix: "What percentage of your total sales comes from delivery orders",
+    deliveryMix: "What percentage of your online orders are delivery? Pickup is the remainder.",
     migrationPercent: "How much of your delivery business you plan to move to your own platform"
   };
 
@@ -173,21 +195,46 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
         <div className="input-controls">
           <h3>Adjust Your Restaurant's Details</h3>
           
-          {/* Total GPV Input */}
+          {/* Total GPV Input with Timeframe Toggle */}
           <div className="input-group">
-            <label htmlFor="total-gpv">
-              Total Gross Payment Volume ({inputs.timeframe === 'annual' ? 'Annual' : 'Monthly'})
-              <span
-                className="tooltip-trigger"
-                onMouseEnter={() => setShowTooltip('totalGPV')}
-                onMouseLeave={() => setShowTooltip(null)}
-              >
-                ℹ️
-              </span>
-            </label>
+            <div className="gpv-header">
+              <label htmlFor="total-gpv">
+                Total Online Sales (Pickup & Delivery)
+                <span
+                  className="tooltip-trigger"
+                  onMouseEnter={() => setShowTooltip('totalGPV')}
+                  onMouseLeave={() => setShowTooltip(null)}
+                >
+                  ?
+                </span>
+              </label>
+              
+              {/* Timeframe Toggle - Adjacent to GPV Input */}
+              <div className="timeframe-toggle-container">
+                <span className="toggle-label">Timeframe:</span>
+                <div className="toggle-group compact">
+                  <button
+                    type="button"
+                    className={`toggle-button ${inputs.timeframe === 'monthly' ? 'active' : ''}`}
+                    onClick={() => handleInputChange('timeframe', 'monthly')}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    type="button"
+                    className={`toggle-button ${inputs.timeframe === 'annual' ? 'active' : ''}`}
+                    onClick={() => handleInputChange('timeframe', 'annual')}
+                  >
+                    Annual
+                  </button>
+                </div>
+              </div>
+            </div>
+            
             {showTooltip === 'totalGPV' && (
               <div className="tooltip">{tooltips.totalGPV}</div>
             )}
+            
             <div className="input-wrapper">
               <span className="currency-symbol">$</span>
               <input
@@ -195,34 +242,14 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
                 type="text"
                 value={formatInputValue(inputs.totalGPV)}
                 onChange={(e) => handleInputChange('totalGPV', parseInputValue(e.target.value))}
-                placeholder={`e.g., ${new Intl.NumberFormat('en-US').format(SUGGESTED_VALUES.totalGPV)}`}
+                placeholder={`e.g., ${new Intl.NumberFormat('en-US').format(inputs.timeframe === 'monthly' ? 20000 : SUGGESTED_VALUES.totalGPV)}${inputs.timeframe === 'monthly' ? '/month' : '/year'}`}
                 className={`gpv-input ${inputErrors.totalGPV ? 'error' : ''}`}
               />
             </div>
+            
             {inputErrors.totalGPV && (
               <span className="error-message">{inputErrors.totalGPV}</span>
             )}
-          </div>
-
-          {/* Timeframe Toggle */}
-          <div className="input-group">
-            <label>Timeframe</label>
-            <div className="toggle-group">
-              <button
-                type="button"
-                className={`toggle-button ${inputs.timeframe === 'annual' ? 'active' : ''}`}
-                onClick={() => handleInputChange('timeframe', 'annual')}
-              >
-                Annual
-              </button>
-              <button
-                type="button"
-                className={`toggle-button ${inputs.timeframe === 'monthly' ? 'active' : ''}`}
-                onClick={() => handleInputChange('timeframe', 'monthly')}
-              >
-                Monthly
-              </button>
-            </div>
           </div>
 
           {/* Commission Percentage Slider */}
@@ -234,7 +261,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
                 onMouseEnter={() => setShowTooltip('commissionPercent')}
                 onMouseLeave={() => setShowTooltip(null)}
               >
-                ℹ️
+                ?
               </span>
             </label>
             {showTooltip === 'commissionPercent' && (
@@ -245,7 +272,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
               type="range"
               min="0"
               max="40"
-              step="0.5"
+              step="1"
               value={inputs.commissionPercent ?? SUGGESTED_VALUES.commissionPercent}
               onChange={(e) => handleInputChange('commissionPercent', parseFloat(e.target.value))}
               className="slider"
@@ -262,13 +289,13 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
           {/* Delivery Mix Slider */}
           <div className="input-group">
             <label htmlFor="delivery-mix">
-              Delivery Mix (% of total sales): {inputs.deliveryMix !== null ? `${inputs.deliveryMix}%` : `Select percentage (suggested: ${SUGGESTED_VALUES.deliveryMix}%)`}
+              What % of your online orders are delivery?: {inputs.deliveryMix !== null ? `${inputs.deliveryMix}%` : `Select percentage (suggested: ${SUGGESTED_VALUES.deliveryMix}%)`}
               <span
                 className="tooltip-trigger"
                 onMouseEnter={() => setShowTooltip('deliveryMix')}
                 onMouseLeave={() => setShowTooltip(null)}
               >
-                ℹ️
+                ?
               </span>
             </label>
             {showTooltip === 'deliveryMix' && (
@@ -302,7 +329,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
                 onMouseEnter={() => setShowTooltip('migrationPercent')}
                 onMouseLeave={() => setShowTooltip(null)}
               >
-                ℹ️
+                ?
               </span>
             </label>
             {showTooltip === 'migrationPercent' && (
@@ -356,7 +383,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
           {showResults && allInputsFilled ? (
             <>
               <FinancialImpactCards results={results} timeframe={inputs.timeframe} />
-              <SavingsChart projections={results.monthlyProjections} />
+              <SavingsChart projections={results.monthlyProjections} timeframe={inputs.timeframe} />
             </>
           ) : (
             <div className="results-placeholder">
@@ -365,7 +392,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
               <div className="input-progress">
                 <div className="progress-item">
                   <span className={inputs.totalGPV !== null ? 'completed' : 'pending'}>
-                    ✓ Total Gross Payment Volume
+                    ✓ Total Online Sales (Pickup & Delivery)
                   </span>
                 </div>
                 <div className="progress-item">

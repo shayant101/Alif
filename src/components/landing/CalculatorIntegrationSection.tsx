@@ -24,8 +24,8 @@ export const CalculatorIntegrationSection: React.FC<CalculatorIntegrationSection
 
   // Provide default restaurant info if none is provided
   const defaultRestaurantInfo: RestaurantInfo = restaurantInfo || {
-    name: 'Your Restaurant',
-    city: 'Your City'
+    name: '',
+    city: ''
   };
 
   return (
