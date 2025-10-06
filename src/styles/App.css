@@ -309,7 +309,14 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: start;
+  align-items: stretch;
+  min-height: 100%;
+}
+
+.input-controls {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-controls h3 {
@@ -323,6 +330,7 @@ body {
   background-clip: text;
   position: relative;
   padding-bottom: 1rem;
+  flex-shrink: 0;
 }
 
 .input-controls h3::after {
@@ -652,13 +660,309 @@ body {
   z-index: 10;
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(18px);
-  height: fit-content;
-  max-height: 65vh;
+  height: 100%;
   width: 100%;
   max-width: 520px;
-  margin: 8rem auto 2rem auto;
+  margin: 0;
   animation: floatUpDown 4s ease-in-out infinite;
-  align-self: center;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Case Study Styles */
+.results-placeholder.case-study {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 2px solid #e2e8f0;
+  padding: 3rem;
+  text-align: left;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  animation: none;
+  transform: none;
+  position: static;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.case-study-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.case-study-header h3 {
+  color: #1e3c72;
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.restaurant-badge {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.restaurant-info {
+  margin-bottom: 2rem;
+}
+
+.restaurant-info h4 {
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.location {
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+.metric-label {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  color: #1f2937;
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.savings-highlight {
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+  border: 2px solid #10b981;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.savings-highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.savings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.savings-row.annual {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.savings-label {
+  color: #064e3b;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+.savings-amount {
+  color: #059669;
+  font-size: 1.75rem;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
+}
+
+.savings-row.annual .savings-amount {
+  font-size: 2rem;
+}
+
+.percentage-saved {
+  text-align: center;
+  color: #047857;
+  font-size: 1rem;
+  margin: 0;
+  margin-bottom: 1rem;
+  text-shadow: none;
+}
+
+.cta-integrated {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.cta-integrated strong {
+  color: #3b82f6;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+.testimonial {
+  background: rgba(255, 255, 255, 0.8);
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial p {
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.testimonial cite {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.cta-section {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(29, 78, 216, 0.05) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.cta-text {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cta-text strong {
+  color: #1e3c72;
+  font-size: 1.3rem;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta-text p {
+  color: #64748b;
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.case-study .input-progress {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 0;
+}
+
+.case-study .progress-item {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.case-study .progress-item.completed {
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+  border-color: #10b981;
+  color: #059669;
+}
+
+.case-study .progress-item span.completed {
+  color: #059669;
+}
+
+.case-study .progress-item span.pending {
+  color: #9ca3af;
 }
 
 @keyframes floatUpDown {
@@ -1233,6 +1537,72 @@ body {
     max-width: none;
     margin: 2rem 0;
   }
+
+  /* Case Study Mobile Styles */
+  .results-placeholder.case-study {
+    padding: 2rem;
+  }
+
+  .case-study-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .case-study-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .restaurant-info h4 {
+    font-size: 1.3rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .metric-card {
+    padding: 1.25rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+
+  .savings-highlight {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .savings-amount {
+    font-size: 1.5rem;
+  }
+
+  .savings-row.annual .savings-amount {
+    font-size: 1.75rem;
+  }
+
+  .testimonial {
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-section {
+    padding: 1.5rem;
+  }
+
+  .cta-text strong {
+    font-size: 1.2rem;
+  }
+
+  .case-study .input-progress {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1269,6 +1639,65 @@ body {
     max-width: none;
     margin: 1.5rem 0;
     padding: 1.5rem;
+  }
+
+  /* Case Study Small Mobile Styles */
+  .results-placeholder.case-study {
+    padding: 1.5rem;
+  }
+
+  .case-study-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .restaurant-info h4 {
+    font-size: 1.2rem;
+  }
+
+  .restaurant-badge {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+  }
+
+  .metric-value {
+    font-size: 1.3rem;
+  }
+
+  .savings-highlight {
+    padding: 1.25rem;
+  }
+
+  .savings-amount {
+    font-size: 1.3rem;
+  }
+
+  .savings-row.annual .savings-amount {
+    font-size: 1.5rem;
+  }
+
+  .testimonial {
+    padding: 1rem;
+  }
+
+  .testimonial p {
+    font-size: 0.9rem;
+  }
+
+  .cta-section {
+    padding: 1.25rem;
+  }
+
+  .cta-text strong {
+    font-size: 1.1rem;
+  }
+
+  .case-study .progress-item {
+    padding: 0.75rem;
+    font-size: 0.85rem;
   }
 }
 

@@ -14,8 +14,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
           <div className="hero-text">
             <h1 className="hero-title">
               Stop Paying <span className="highlight">30% Commissions</span>
-              <br />
-              Build Your Own Brand Instead
             </h1>
             
             <p className="hero-subtitle">
@@ -53,35 +51,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
           </div>
           
           <div className="hero-visual">
-            <Card variant="glass" className="demo-card">
-              <div className="demo-content">
-                <h3>Your Restaurant Dashboard</h3>
-                <div className="demo-metrics">
-                  <div className="metric">
-                    <span className="metric-label">Monthly Orders</span>
-                    <span className="metric-value">1,247</span>
-                    <span className="metric-trend positive">+23%</span>
-                  </div>
-                  <div className="metric">
-                    <span className="metric-label">Commission Saved</span>
-                    <span className="metric-value">$4,890</span>
-                    <span className="metric-trend positive">vs 3rd party</span>
-                  </div>
-                  <div className="metric">
-                    <span className="metric-label">Customer Retention</span>
-                    <span className="metric-value">87%</span>
-                    <span className="metric-trend positive">+15%</span>
-                  </div>
+            <Card variant="glass" className="testimonial-card">
+              <div className="testimonial-image-container">
+                <img
+                  src="/src/assets/alif-2.png"
+                  alt="Amina - Restaurant Owner Testimonial"
+                  className="hero-image"
+                />
+                <div className="testimonial-header">
+                  <h3 className="owner-name">Amina</h3>
+                  <p className="owner-title">Owner of Urban Punjab</p>
                 </div>
-                <div className="demo-chart">
-                  <div className="chart-bars">
-                    <div className="bar" style={{ height: '60%' }}></div>
-                    <div className="bar" style={{ height: '75%' }}></div>
-                    <div className="bar" style={{ height: '90%' }}></div>
-                    <div className="bar" style={{ height: '85%' }}></div>
-                    <div className="bar" style={{ height: '100%' }}></div>
-                  </div>
-                  <p className="chart-label">Revenue Growth</p>
+                <div className="testimonial-footer">
+                  <div className="savings-highlight">+$48,000<span className="savings-period">/year</span></div>
+                  <p className="savings-description">In commissions saved</p>
                 </div>
               </div>
             </Card>

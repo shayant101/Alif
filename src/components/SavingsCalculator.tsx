@@ -386,29 +386,57 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
               <SavingsChart projections={results.monthlyProjections} timeframe={inputs.timeframe} />
             </>
           ) : (
-            <div className="results-placeholder">
-              <h3>Financial Impact Summary</h3>
-              <p>Complete all inputs above and click "Calculate My Savings" to see your potential savings.</p>
-              <div className="input-progress">
-                <div className="progress-item">
-                  <span className={inputs.totalGPV !== null ? 'completed' : 'pending'}>
-                    ✓ Total Online Sales (Pickup & Delivery)
-                  </span>
+            <div className="results-placeholder case-study">
+              <div className="case-study-header">
+                <h3>Success Story</h3>
+                <div className="restaurant-badge">Trusted Partner</div>
+              </div>
+              
+              <div className="case-study-content">
+                <div className="restaurant-info">
+                  <h4>Bella Vista Italian Kitchen</h4>
+                  <p className="location">📍 San Francisco, CA • Family-owned since 2018</p>
                 </div>
-                <div className="progress-item">
-                  <span className={inputs.commissionPercent !== null ? 'completed' : 'pending'}>
-                    ✓ Commission Rate
-                  </span>
+                
+                <div className="metrics-grid">
+                  <div className="metric-card">
+                    <div className="metric-label">Monthly Online Sales</div>
+                    <div className="metric-value">$28,000</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">Previous Commission Rate</div>
+                    <div className="metric-value">22%</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">Delivery Mix</div>
+                    <div className="metric-value">65%</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">Migration to Innowi</div>
+                    <div className="metric-value">75%</div>
+                  </div>
                 </div>
-                <div className="progress-item">
-                  <span className={inputs.deliveryMix !== null ? 'completed' : 'pending'}>
-                    ✓ Delivery Mix
-                  </span>
+                
+                <div className="savings-highlight">
+                  <div className="savings-row">
+                    <span className="savings-label">Monthly Savings:</span>
+                    <span className="savings-amount">$2,835</span>
+                  </div>
+                  <div className="savings-row annual">
+                    <span className="savings-label">Annual Savings:</span>
+                    <span className="savings-amount">$34,020</span>
+                  </div>
+                  <div className="percentage-saved">
+                    <strong>16.5% reduction in commission costs</strong>
+                  </div>
+                  <div className="cta-integrated">
+                    <strong>👈 What could your restaurant save?</strong>
+                  </div>
                 </div>
-                <div className="progress-item">
-                  <span className={inputs.migrationPercent !== null ? 'completed' : 'pending'}>
-                    ✓ Migration Percentage
-                  </span>
+                
+                <div className="testimonial">
+                  <p>"Switching to Innowi was the best decision we made. We're saving over $34K annually and our customers love the direct ordering experience!"</p>
+                  <cite>— Maria Rodriguez, Owner</cite>
                 </div>
               </div>
             </div>
