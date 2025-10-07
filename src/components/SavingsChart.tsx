@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   LineChart,
   Line,
@@ -9,12 +9,16 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
-import type { MonthlyProjection } from '../types';
+import type { MonthlyProjection, CalculationResults } from '../types';
 import { formatCurrency } from '../utils/calculations';
+import { generateMarketingPlanPDF } from '../utils/pdfGenerator';
+import { PDFDownloadModal } from './PDFDownloadModal';
 
 interface SavingsChartProps {
   projections: MonthlyProjection[];
   timeframe?: 'monthly' | 'annual';
+  results?: CalculationResults;
+  restaurantName?: string;
 }
 
 interface CustomTooltipProps {
@@ -45,8 +49,41 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label })
 
 export const SavingsChart: React.FC<SavingsChartProps> = ({
   projections,
-  timeframe = 'monthly'
+  timeframe = 'monthly',
+  results,
+  restaurantName
 }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleDownloadClick = () => {
+    setShowModal(true);
+  };
+
+  const handleModalSubmit = (name: string, phone: string) => {
+    if (!results) return;
+
+    // You can save the user data here or send it to your backend
+    console.log('User data:', { name, phone });
+
+    const totalSavings = projections.reduce((sum, proj) => sum + proj.savings, 0);
+    const monthlySavings = results.savingsAmount;
+    const annualSavings = monthlySavings * 12;
+
+    generateMarketingPlanPDF({
+      projections,
+      timeframe,
+      restaurantName,
+      totalSavings,
+      monthlySavings,
+      annualSavings
+    });
+
+    setShowModal(false);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
   // Transform data for the chart with cumulative values
   const chartData = projections.map((projection, index) => {
     // Calculate cumulative values up to current month
@@ -145,7 +182,6 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
         {/* Cumulative Impact Card */}
         <div className="cumulative-impact-card-below">
           <div className="insight-card-redesigned">
-            <div className="insight-icon">💰</div>
             <div className="insight-content">
               <h4>Cumulative Impact</h4>
               <p>Your savings compound over time, creating significant long-term value for your restaurant.</p>
@@ -157,26 +193,32 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
         <div className="marketing-plan-cta-below">
           <div className="cta-content-prominent">
             <div className="cta-header">
-              <div className="cta-badge">🎯 EXCLUSIVE</div>
+              <div className="cta-badge">EXCLUSIVE</div>
               <h4>Get Your Custom Marketing Plan</h4>
             </div>
             <p>Receive a detailed strategy tailored specifically for <strong>Your Restaurant</strong> to maximize your savings potential.</p>
             <div className="cta-benefits">
-              <div className="benefit-item">✅ Personalized recommendations</div>
-              <div className="benefit-item">✅ Step-by-step implementation guide</div>
-              <div className="benefit-item">✅ ROI tracking templates</div>
+              <div className="benefit-item">• Personalized recommendations</div>
+              <div className="benefit-item">• Step-by-step implementation guide</div>
+              <div className="benefit-item">• ROI tracking templates</div>
             </div>
-            <button className="download-plan-btn-prominent">
-              <span className="btn-icon">📋</span>
+            <button className="download-plan-btn-prominent" onClick={handleDownloadClick}>
               <span className="btn-text">
                 <span className="btn-main">Download FREE Marketing Plan</span>
                 <span className="btn-sub">Valued at $297 - Limited Time</span>
               </span>
-              <span className="btn-arrow">→</span>
             </button>
           </div>
         </div>
       </div>
+
+      {/* PDF Download Modal */}
+      {showModal && (
+        <PDFDownloadModal
+          onSubmit={handleModalSubmit}
+          onClose={handleModalClose}
+        />
+      )}
     </div>
   );
 };

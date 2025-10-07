@@ -192,15 +192,6 @@ body {
   contain: layout;
 }
 
-.savings-calculator::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
-}
 
 .calculator-header {
   text-align: center;
@@ -210,17 +201,6 @@ body {
   position: relative;
 }
 
-.calculator-header::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
-  border-radius: 2px;
-}
 
 .calculator-header h2 {
   color: #1e3c72;
@@ -585,17 +565,6 @@ body {
   position: relative;
 }
 
-.calculate-section::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
-  border-radius: 2px;
-}
 
 .calculate-button {
   background: linear-gradient(135deg, #1e3c72 0%, #3b82f6 100%);
@@ -1791,7 +1760,7 @@ input:focus,
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
   gap: 2rem;
-  align-items: start;
+  align-items: stretch;
   width: 100%;
   max-width: none;
   min-height: 600px;
@@ -1819,7 +1788,7 @@ input:focus,
   grid-column: 2;
   grid-row: 2;
   height: fit-content;
-  align-self: start;
+  align-self: end;
 }
 
 /* Cumulative Impact Card Styling */
@@ -2216,15 +2185,6 @@ input:focus,
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-.recommendations-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
-}
 
 .recommendations-section h4 {
   color: #1e293b;
@@ -3359,5 +3319,299 @@ input:focus,
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
     min-width: 45px;
+  }
+}
+
+/* PDF Download Modal */
+.pdf-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease;
+}
+
+.pdf-modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.pdf-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #9ca3af;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.pdf-modal-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.pdf-modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.pdf-modal-header h3 {
+  color: #1e293b;
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.pdf-modal-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.pdf-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pdf-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pdf-form-group label {
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.pdf-form-group input {
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.pdf-form-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.pdf-form-group input.error {
+  border-color: #ef4444;
+}
+
+.pdf-error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: -0.25rem;
+}
+
+.pdf-submit-btn {
+  background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.pdf-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .pdf-modal-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .pdf-modal-header h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Eligibility Modal */
+.eligibility-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease;
+}
+
+.eligibility-modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 550px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.eligibility-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #9ca3af;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.eligibility-modal-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.eligibility-modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.eligibility-modal-header h3 {
+  color: #1e293b;
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.eligibility-modal-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.eligibility-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.eligibility-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.eligibility-form-group label {
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.eligibility-form-group input {
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.eligibility-form-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.eligibility-form-group input.error {
+  border-color: #ef4444;
+}
+
+.eligibility-error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: -0.25rem;
+}
+
+.eligibility-submit-btn {
+  background: linear-gradient(135deg, #1e3c72 0%, #3b82f6 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.eligibility-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+}
+
+@media (max-width: 640px) {
+  .eligibility-modal-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .eligibility-modal-header h3 {
+    font-size: 1.5rem;
   }
 }

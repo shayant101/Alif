@@ -383,7 +383,12 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
           {showResults && allInputsFilled ? (
             <>
               <FinancialImpactCards results={results} timeframe={inputs.timeframe} />
-              <SavingsChart projections={results.monthlyProjections} timeframe={inputs.timeframe} />
+              <SavingsChart
+                projections={results.monthlyProjections}
+                timeframe={inputs.timeframe}
+                results={results}
+                restaurantName={restaurantName}
+              />
             </>
           ) : (
             <div className="results-placeholder case-study">

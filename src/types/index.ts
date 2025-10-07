@@ -24,6 +24,7 @@ export interface MonthlyProjection {
   savings: number;
   thirdPartyFees: number;
   innowiFees: number;
+  cumulativeSavings: number;
 }
 
 export interface LeadData {

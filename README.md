@@ -1,6 +1,6 @@
-# React + TypeScript + Vite
+# Innowi Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the Innowi Calculator application built with React and TypeScript, providing restaurant owners with savings calculations and insights.
 
 Currently, two official plugins are available:
 

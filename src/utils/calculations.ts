@@ -88,11 +88,12 @@ function generateMonthlyProjections(
   const monthlyInnowi = annualInnowiFees / divisor;
   const monthlySavings = annualSavings / divisor;
 
-  return months.map(month => ({
+  return months.map((month, index) => ({
     month,
     savings: monthlySavings,
     thirdPartyFees: monthlyThirdParty,
-    innowiFees: monthlyInnowi
+    innowiFees: monthlyInnowi,
+    cumulativeSavings: monthlySavings * (index + 1)
   }));
 }
 
