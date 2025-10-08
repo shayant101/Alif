@@ -289,7 +289,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: stretch;
+  align-items: start;
   min-height: 100%;
 }
 
@@ -653,10 +653,11 @@ body {
   margin: 0;
   max-height: none;
   max-width: none;
-  height: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-self: start;
 }
 
 .case-study-header {
