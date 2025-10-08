@@ -1,6 +1,5 @@
 import type { CalculatorInputs, CalculationResults, MonthlyProjection } from '../types';
 
-const THIRD_PARTY_ORDER_FEE = 4.00;
 const INNOWI_PROCESSING_FEE = 0.029; // 2.9%
 const INNOWI_TRANSACTION_FEE = 0.30;
 
