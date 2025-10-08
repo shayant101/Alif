@@ -41,9 +41,9 @@ export const FinancialImpactCards: React.FC<FinancialImpactCardsProps> = ({
     {
       id: 'savings-percent',
       title: 'Savings Percentage',
-      subtitle: 'of GPV',
+      subtitle: 'of 3P Commissions',
       value: formatPercent(results.savingsPercent),
-      description: `Percentage of total revenue saved`,
+      description: `Percentage of commission costs saved`,
       type: 'savings' as const
     }
   ];

@@ -42,7 +42,7 @@ export function calculateSavings(inputs: CalculatorInputs): CalculationResults {
   const migratedOrders = totalOrders * migrationRate;
 
   // Calculate 3P Commissions (migrated)
-  const thirdPartyCommissions = migrationRate * (deliveryGPV * commissionRate + totalOrders * THIRD_PARTY_ORDER_FEE);
+  const thirdPartyCommissions = migrationRate * (deliveryGPV * commissionRate);
 
   // Calculate Innowi Fees (migrated)
   const innowiFees = (
@@ -53,7 +53,7 @@ export function calculateSavings(inputs: CalculatorInputs): CalculationResults {
 
   // Calculate savings
   const savingsAmount = thirdPartyCommissions - innowiFees;
-  const savingsPercent = (savingsAmount / (migrationRate * totalGPV)) * 100;
+  const savingsPercent = thirdPartyCommissions > 0 ? (savingsAmount / thirdPartyCommissions) * 100 : 0;
 
   // Generate monthly projections
   const monthlyProjections = generateMonthlyProjections(
