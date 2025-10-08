@@ -5,6 +5,7 @@ import { calculateSavings, saveToSession } from '../utils/calculations';
 import { FinancialImpactCards } from './FinancialImpactCards';
 import { SavingsChart } from './SavingsChart';
 import { SavingsInsights } from './SavingsInsights';
+import { ContactCaptureForm } from './ContactCaptureForm';
 
 interface SavingsCalculatorProps {
   restaurantInfo: RestaurantInfo;
@@ -34,6 +35,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
   const [isCalculating, setIsCalculating] = useState(false);
   const [inputErrors, setInputErrors] = useState<Partial<Record<keyof CalculatorInputs, string>>>({});
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
+  const [showContactForm, setShowContactForm] = useState(false);
   
   // Restaurant info state
   const [restaurantName, setRestaurantName] = useState(restaurantInfo?.name || '');
@@ -68,7 +70,24 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
     }
   };
 
-  // Track when user has viewed results to show email form
+  // Handle Start Saving button click
+  const handleStartSaving = () => {
+    setShowContactForm(true);
+  };
+
+  // Handle contact form submission
+  const handleContactSubmit = (contactData: any) => {
+    console.log('Contact data submitted:', contactData);
+    setShowContactForm(false);
+    // You can add additional logic here like sending to backend
+  };
+
+  // Handle contact form close
+  const handleContactClose = () => {
+    setShowContactForm(false);
+  };
+
+  // Track when user has viewed results to show email form (keeping original functionality)
   useEffect(() => {
     if (!hasViewedResults && showResults && allInputsFilled && results.savingsAmount > 0) {
       setHasViewedResults(true);
@@ -467,6 +486,7 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
                 timeframe={inputs.timeframe}
                 results={results}
                 restaurantName={restaurantName}
+                onStartSaving={handleStartSaving}
               />
             </>
           ) : (
@@ -527,6 +547,16 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
           )}
         </div>
       </div>
+
+      {/* Contact Capture Form Modal */}
+      {showContactForm && (
+        <ContactCaptureForm
+          restaurantInfo={{ name: restaurantName, city: restaurantCity }}
+          calculationResults={results}
+          onSubmit={handleContactSubmit}
+          onClose={handleContactClose}
+        />
+      )}
     </div>
   );
 };

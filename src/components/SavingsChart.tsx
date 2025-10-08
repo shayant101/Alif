@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
-  LineChart,
+  ComposedChart,
   Line,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -19,6 +20,7 @@ interface SavingsChartProps {
   timeframe?: 'monthly' | 'annual';
   results?: CalculationResults;
   restaurantName?: string;
+  onStartSaving?: () => void;
 }
 
 interface CustomTooltipProps {
@@ -51,7 +53,8 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
   projections,
   timeframe = 'monthly',
   results,
-  restaurantName
+  restaurantName,
+  onStartSaving
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -110,7 +113,7 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
       
       <div className="chart-container-light">
         <ResponsiveContainer width="100%" height={320}>
-          <LineChart
+          <ComposedChart
             data={chartData}
             margin={{
               top: 20,
@@ -144,6 +147,18 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
             <Tooltip content={<CustomTooltip />} />
             <Legend />
             
+            {/* Monthly Savings Area - Now prominently displayed as shaded area */}
+            <Area
+              type="monotone"
+              dataKey="Monthly Savings"
+              stroke="#10b981"
+              strokeWidth={2}
+              fill="url(#savingsGradient)"
+              fillOpacity={0.8}
+              dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+              activeDot={{ r: 6, stroke: '#10b981', strokeWidth: 2, fill: '#ffffff' }}
+            />
+            
             {/* 3P Platform Fees Line */}
             <Line
               type="monotone"
@@ -164,16 +179,14 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
               activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }}
             />
             
-            {/* Monthly Savings Line */}
-            <Line
-              type="monotone"
-              dataKey="Monthly Savings"
-              stroke="#10b981"
-              strokeWidth={3}
-              dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
-              activeDot={{ r: 6, stroke: '#10b981', strokeWidth: 2 }}
-            />
-          </LineChart>
+            {/* Define gradient for savings area */}
+            <defs>
+              <linearGradient id="savingsGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#10b981" stopOpacity={0.8}/>
+                <stop offset="100%" stopColor="#10b981" stopOpacity={0.2}/>
+              </linearGradient>
+            </defs>
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
 
@@ -189,7 +202,40 @@ export const SavingsChart: React.FC<SavingsChartProps> = ({
           </div>
         </div>
 
-        {/* Marketing Plan CTA */}
+        {/* Start Saving CTA - Now appears first */}
+        {onStartSaving && (
+          <div className="start-saving-cta">
+            <div className="cta-card">
+              <div className="cta-header">
+                <h4>Ready to Start Saving?</h4>
+                <p>Get personalized guidance to implement your savings plan and start reducing costs immediately.</p>
+              </div>
+              <div className="cta-benefits">
+                <div className="benefit-highlight">
+                  <span className="benefit-icon">$</span>
+                  <span>Save {results ? formatCurrency(results.savingsAmount) : ''} annually</span>
+                </div>
+                <div className="benefit-highlight">
+                  <span className="benefit-icon">✓</span>
+                  <span>Free consultation call</span>
+                </div>
+                <div className="benefit-highlight">
+                  <span className="benefit-icon">⚡</span>
+                  <span>Start saving within 48 hours</span>
+                </div>
+              </div>
+              <button
+                className="start-saving-btn"
+                onClick={onStartSaving}
+              >
+                <span className="btn-text">START SAVING NOW</span>
+                <span className="btn-arrow">→</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Marketing Plan CTA - Now appears second */}
         <div className="marketing-plan-cta-below">
           <div className="cta-content-prominent">
             <div className="cta-header">
