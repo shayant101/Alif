@@ -1,8 +1,6 @@
 import type { CalculatorInputs, CalculationResults, MonthlyProjection } from '../types';
 
-const AVERAGE_ORDER_VALUE = 35;
 const THIRD_PARTY_ORDER_FEE = 4.00;
-const INNOWI_ORDER_FEE = 1.00;
 const INNOWI_PROCESSING_FEE = 0.029; // 2.9%
 const INNOWI_TRANSACTION_FEE = 0.30;
 
@@ -12,11 +10,13 @@ export function calculateSavings(inputs: CalculatorInputs): CalculationResults {
     commissionPercent,
     deliveryMix,
     migrationPercent,
+    innowiServiceFee,
+    averageTicketSize,
     timeframe
   } = inputs;
 
   // Return zero results if any required input is missing
-  if (totalGPV === null || commissionPercent === null || deliveryMix === null || migrationPercent === null) {
+  if (totalGPV === null || commissionPercent === null || deliveryMix === null || migrationPercent === null || innowiServiceFee === null || averageTicketSize === null) {
     return {
       thirdPartyCommissions: 0,
       innowiFees: 0,
@@ -34,8 +34,8 @@ export function calculateSavings(inputs: CalculatorInputs): CalculationResults {
   // Calculate delivery GPV
   const deliveryGPV = totalGPV * deliveryRate;
   
-  // Calculate number of orders (assuming $35 average order value)
-  const totalOrders = deliveryGPV / AVERAGE_ORDER_VALUE;
+  // Calculate number of orders using dynamic average ticket size
+  const totalOrders = deliveryGPV / averageTicketSize;
 
   // Calculate migrated amounts
   const migratedGPV = deliveryGPV * migrationRate;
@@ -45,8 +45,8 @@ export function calculateSavings(inputs: CalculatorInputs): CalculationResults {
   const thirdPartyCommissions = migrationRate * (deliveryGPV * commissionRate + totalOrders * THIRD_PARTY_ORDER_FEE);
 
   // Calculate Innowi Fees (migrated)
-  const innowiFees = migrationRate * (
-    migratedOrders * INNOWI_ORDER_FEE +
+  const innowiFees = (
+    migratedOrders * innowiServiceFee +
     migratedGPV * INNOWI_PROCESSING_FEE +
     migratedOrders * INNOWI_TRANSACTION_FEE
   );

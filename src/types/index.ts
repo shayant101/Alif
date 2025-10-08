@@ -8,6 +8,8 @@ export interface CalculatorInputs {
   commissionPercent: number | null;
   deliveryMix: number | null;
   migrationPercent: number | null;
+  innowiServiceFee: number | null;
+  averageTicketSize: number | null;
   timeframe: 'annual' | 'monthly';
 }
 
@@ -47,7 +49,9 @@ export const SUGGESTED_VALUES = {
   totalGPV: 1200000, // $1.2M annual
   commissionPercent: 30,
   deliveryMix: 85,
-  migrationPercent: 40
+  migrationPercent: 40,
+  innowiServiceFee: 1.0,
+  averageTicketSize: 35
 };
 
 export const DEFAULT_INPUTS: CalculatorInputs = {
@@ -55,5 +59,7 @@ export const DEFAULT_INPUTS: CalculatorInputs = {
   commissionPercent: SUGGESTED_VALUES.commissionPercent,
   deliveryMix: SUGGESTED_VALUES.deliveryMix,
   migrationPercent: SUGGESTED_VALUES.migrationPercent,
+  innowiServiceFee: SUGGESTED_VALUES.innowiServiceFee,
+  averageTicketSize: SUGGESTED_VALUES.averageTicketSize,
   timeframe: 'monthly'
 };

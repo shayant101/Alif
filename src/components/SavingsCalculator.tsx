@@ -53,7 +53,9 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
   const allInputsFilled = inputs.totalGPV !== null &&
                           inputs.commissionPercent !== null &&
                           inputs.deliveryMix !== null &&
-                          inputs.migrationPercent !== null;
+                          inputs.migrationPercent !== null &&
+                          inputs.innowiServiceFee !== null &&
+                          inputs.averageTicketSize !== null;
 
   // Handle calculate button click
   const handleCalculate = async () => {
@@ -137,6 +139,12 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
       case 'migrationPercent':
         if (value < 0 || value > 100) return 'Migration percentage should be between 0% and 100%';
         break;
+      case 'innowiServiceFee':
+        if (value < 0 || value > 3) return 'Service fee should be between $0.00 and $3.00';
+        break;
+      case 'averageTicketSize':
+        if (value < 20 || value > 100) return 'Average ticket size should be between $20 and $100';
+        break;
     }
     return null;
   };
@@ -156,7 +164,9 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
     totalGPV: "Your restaurant's total payment volume from all sources (dine-in, takeout, delivery)",
     commissionPercent: "The percentage fee charged by third-party delivery platforms like DoorDash, Uber Eats",
     deliveryMix: "What percentage of your online orders are delivery? Pickup is the remainder.",
-    migrationPercent: "How much of your delivery business you plan to move to your own platform"
+    migrationPercent: "How much of your delivery business you plan to move to your own platform",
+    innowiServiceFee: "The per-order service fee charged by Innowi for processing orders",
+    averageTicketSize: "The average dollar amount of each delivery order at your restaurant"
   };
 
   return (
@@ -353,6 +363,75 @@ export const SavingsCalculator: React.FC<SavingsCalculatorProps> = ({
               <span className="error-message">{inputErrors.migrationPercent}</span>
             )}
           </div>
+
+          {/* Innowi Service Fee Slider */}
+          <div className="input-group">
+            <label htmlFor="innowi-service-fee">
+              Innowi Service Fee per Order: {inputs.innowiServiceFee !== null ? `$${inputs.innowiServiceFee.toFixed(2)}` : `Select fee (suggested: $${SUGGESTED_VALUES.innowiServiceFee.toFixed(2)})`}
+              <span
+                className="tooltip-trigger"
+                onMouseEnter={() => setShowTooltip('innowiServiceFee')}
+                onMouseLeave={() => setShowTooltip(null)}
+              >
+                ?
+              </span>
+            </label>
+            {showTooltip === 'innowiServiceFee' && (
+              <div className="tooltip">{tooltips.innowiServiceFee}</div>
+            )}
+            <input
+              id="innowi-service-fee"
+              type="range"
+              min="0"
+              max="3"
+              step="0.1"
+              value={inputs.innowiServiceFee ?? SUGGESTED_VALUES.innowiServiceFee}
+              onChange={(e) => handleInputChange('innowiServiceFee', parseFloat(e.target.value))}
+              className="slider"
+            />
+            <div className="slider-labels">
+              <span>$0.00</span>
+              <span>$3.00</span>
+            </div>
+            {inputErrors.innowiServiceFee && (
+              <span className="error-message">{inputErrors.innowiServiceFee}</span>
+            )}
+          </div>
+
+          {/* Average Ticket Size Slider */}
+          <div className="input-group">
+            <label htmlFor="average-ticket-size">
+              Average Order Value: {inputs.averageTicketSize !== null ? `$${inputs.averageTicketSize}` : `Select value (suggested: $${SUGGESTED_VALUES.averageTicketSize})`}
+              <span
+                className="tooltip-trigger"
+                onMouseEnter={() => setShowTooltip('averageTicketSize')}
+                onMouseLeave={() => setShowTooltip(null)}
+              >
+                ?
+              </span>
+            </label>
+            {showTooltip === 'averageTicketSize' && (
+              <div className="tooltip">{tooltips.averageTicketSize}</div>
+            )}
+            <input
+              id="average-ticket-size"
+              type="range"
+              min="20"
+              max="100"
+              step="1"
+              value={inputs.averageTicketSize ?? SUGGESTED_VALUES.averageTicketSize}
+              onChange={(e) => handleInputChange('averageTicketSize', parseInt(e.target.value))}
+              className="slider"
+            />
+            <div className="slider-labels">
+              <span>$20</span>
+              <span>$100</span>
+            </div>
+            {inputErrors.averageTicketSize && (
+              <span className="error-message">{inputErrors.averageTicketSize}</span>
+            )}
+          </div>
+
           {/* Calculate Button */}
           <div className="calculate-section">
             <button
